@@ -13,7 +13,7 @@ class Journal
         if (_filepath == "") // Verifies if there is an already existing file
         {
             Console.WriteLine("Enter in the filename you would like to save to? ");
-            _filepath = "C:\\Users\\jacob\\BYUI Collage classes\\2025 Fall\\cse210-hw\\prove\\Develop02\\Journal.cs" + Console.ReadLine();
+            _filepath = "C:\\Users\\jacob\\BYUI Collage classes\\2025 Fall\\cse210-hw\\prove\\Develop02\\" + Console.ReadLine() + ".txt";
         }
 
         try
@@ -34,11 +34,8 @@ class Journal
 
     public void Load()
     {
-        if (_filepath == "") // Verifies if there is an already existing file
-        {
-            Console.WriteLine("Enter in the filename you would like to save to? ");
-            _filepath = Console.ReadLine();
-        }
+        Console.WriteLine("Enter in the filename you would like to load? ");
+        _filepath = "C:\\Users\\jacob\\BYUI Collage classes\\2025 Fall\\cse210-hw\\prove\\Develop02\\" + Console.ReadLine() + ".txt";
 
         try
         {
