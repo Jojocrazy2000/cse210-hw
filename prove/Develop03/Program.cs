@@ -122,18 +122,38 @@ class Program
             //Pass the file path and file name to the StreamReader constructor
             StreamReader sr = new StreamReader(filename);
             //Read the first line of text
-            line = sr.ReadLine();
+            line = "";
             //Continue to read until you reach end of file
             while (line != null)
             {
-                // Add to the buffer list
-                buffer.Add(line);
                 //Read the next line
                 line = sr.ReadLine();
+
+                if(line.Contains(":"))
+                {
+                    string[] intitial = line.Split(':'); // split at the ':' mark of the reference
+
+                    if (intitial[1].Contains('-'))// Are there muitiple verses?
+                    {
+                        string[] verse_length = intitial[1].Split('-'); // Get the length of the reference
+                        int length = int.Parse(verse_length[1]) - int.Parse(verse_length[0]);
+
+                        List<string> verses = new List<string>();
+                        for (int i = 0; i <= length; i++)
+                        {
+                            verses.Add(sr.ReadLine());
+                        }
+
+                        _scriptures.Add(new Scripture(intitial[0], intitial[1], verses));
+                    }
+                    else
+                    {
+                        _scriptures.Add(new Scripture(intitial[0], intitial[1], sr.ReadLine()));
+                    }
+                }
             }
             //close the file
             sr.Close();
-            Console.ReadLine();
 
             // Process the buffer
 
@@ -149,7 +169,7 @@ class Program
                         int length = int.Parse(verse_length[1]) - int.Parse(verse_length[0]); 
 
                         List<string> verses = new List<string>();
-                        for (int j = 0; j < length; j++) // Loop untill all verses have been read
+                        for (int j = 0; j <= length; j++) // Loop untill all verses have been read
                         {
                             verses.Add(buffer[i + j]);
                         }
@@ -198,7 +218,7 @@ class Program
                 {
                     foreach (Word write in verse.getWord()) // Start writing each word to the file
                     {
-                        sw.Write(write.getWord());
+                        sw.Write(write.getWord() + " ");
                     }
                     sw.Write("\n");
                 }
