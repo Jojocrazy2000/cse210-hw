@@ -111,7 +111,6 @@ class Program
         String line;
         List<string> buffer = new List<string>();
         // Variables
-
         
         if (!filename.Contains(".txt"))
         {
@@ -138,26 +137,34 @@ class Program
 
             // Process the buffer
 
-            string[] intitial = buffer[0].Split(':'); // split at the ':' mark of the reference
-            if (intitial[1].Contains('-'))// Are there muitiple verses?
+            
+            for(int i = 0; i < buffer.Count ;i++)
             {
-                string[] verse_length = intitial[1].Split('-');
+                if (buffer[i].Contains(":"))
+                {
+                    string[] intitial = buffer[i].Split(':'); // split at the ':' mark of the reference
+                    if (intitial[1].Contains('-'))// Are there muitiple verses?
+                    {
+                        string[] verse_length = intitial[1].Split('-'); // Get the length of the reference
+                        int length = int.Parse(verse_length[1]) - int.Parse(verse_length[0]); 
 
-                string reference =  verse_length[0] + "-" + verse_length[1];
-                _scriptures.Add(new Scripture(intitial[0], reference, buffer));
-            }
-            else
-            {
-                try
-                {
-                    
+                        List<string> verses = new List<string>();
+                        for (int j = 0; j < length; j++) // Loop untill all verses have been read
+                        {
+                            verses.Add(buffer[i + j]);
+                        }
+                        string reference =  verse_length[0] + "-" + verse_length[1];
+                        _scriptures.Add(new Scripture(intitial[0], reference, verses));
+                    }
+                    else
+                    {
+                        string reference = buffer[0];
+                        _scriptures.Add(new Scripture(intitial[0], reference, buffer));
+                    }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Exception: " + e.Message);
-                }
-                
             }
+
+            
         }
         catch (Exception e)
         {
