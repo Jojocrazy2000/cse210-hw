@@ -95,10 +95,15 @@ class Scripture
             }
             Scram();
         }
-        foreach(Verse reset in _verses)
+        foreach (Verse reset in _verses)
         {
             reset.Reset();
         }
+    }
+    
+    public List<Verse> getVerses()
+    {
+        return _verses;
     }
 
     // constructors
@@ -110,7 +115,7 @@ class Scripture
     public Scripture(string book, string reference, List<string> verses)
     {
         _reference = new Reference(book, reference);
-        foreach(string verse in verses)
+        foreach (string verse in verses)
         {
             _verses.Add(new Verse(verse));
         }

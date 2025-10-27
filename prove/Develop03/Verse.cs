@@ -83,14 +83,18 @@ class Verse
     {
         _words.Append(input);
     }
-
+    public List<Word> getWord()
+        {
+            return _words;
+        }
     // constructors
     public Verse(string verse)
     {
         string[] split = verse.Split(" ");
-        foreach(string word in split)
+        foreach (string word in split)
         {
             _words.Add(new Word(word));
         }
     }
 }
+    

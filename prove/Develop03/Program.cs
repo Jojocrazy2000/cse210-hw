@@ -22,7 +22,7 @@ class Program
         while (direction != "0")
         {
             Console.WriteLine("----/ Scripture Memorizore 2000 /----");
-            Console.WriteLine("0) Exit\n1) Show Scriptures\n2) Memorize Scripture\n3) Add Scripture\n4) Load Scripture");
+            Console.WriteLine("0) Exit\n1) Show Scriptures\n2) Memorize Scripture\n3) Add Scripture\n4) Save Scripture\n5) Load Scripture");
             direction = Console.ReadLine();
 
             if (direction == "1")
@@ -93,19 +93,35 @@ class Program
                     _scriptures.Add(new Scripture(book, first, verse));
                 }
             }
+            else if (direction == "4") // Save a Scripure
+            {
+                Console.WriteLine("What is the name of the file you wish to save too?");
+                save(ref _scriptures, Console.ReadLine());
+            }
+            else if (direction == "5") // Load a scripture
+            {
+                Console.WriteLine("What is the name of the file you wish to Load?");
+                load(ref _scriptures, Console.ReadLine());
+            }
 
         }
     }
-    static void load(ref List<Scripture> _scriptures)
+    static void load(ref List<Scripture> _scriptures, string filename)
     {
         String line;
         List<string> buffer = new List<string>();
         // Variables
 
+        
+        if (!filename.Contains(".txt"))
+        {
+            filename = filename + ".txt";
+        }
+
         try
         {
             //Pass the file path and file name to the StreamReader constructor
-            StreamReader sr = new StreamReader("C:\\Sample.txt");
+            StreamReader sr = new StreamReader(filename);
             //Read the first line of text
             line = sr.ReadLine();
             //Continue to read until you reach end of file
@@ -153,8 +169,43 @@ class Program
         }
     }
     
-    static void save()
+    static void save(ref List<Scripture> _scriptures, string filename)
     {
-        
+        List<string> buffer = new List<string>();
+        // Variables
+
+        if (!filename.Contains(".txt"))
+        {
+            filename = filename + ".txt";
+        }
+
+        try
+        {
+            //Pass the file path and file name to the StreamReader constructor
+            StreamWriter sw = new StreamWriter(filename);
+            
+            foreach (Scripture item in _scriptures) // Get every scripture
+            {
+                sw.WriteLine(item.getReference()); // Write the reference
+                foreach(Verse verse in item.getVerses()) // Get each verse in that scripture
+                {
+                    foreach (Word write in verse.getWord()) // Start writing each word to the file
+                    {
+                        sw.Write(write.getWord());
+                    }
+                    sw.Write("\n");
+                }
+            }
+
+            sw.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Exception: " + e.Message);
+        }
+        finally
+        {
+            Console.WriteLine("Executing finally block.");
+        }
     }
 }

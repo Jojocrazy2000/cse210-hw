@@ -19,19 +19,19 @@ class Journal
         try
         {
             StreamWriter sw = new StreamWriter(_filepath, false); // Write to file
-            foreach(Entry copy in _entries)
+            foreach (Entry copy in _entries)
             {
                 sw.WriteLine($"{copy.getPrompt()}\n{copy.getResponse()}\n{copy.getDate()}");
             }
             sw.Close();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine($"Error:{e}");
         }
 
     }
-
+// }]
     public void Load()
     {
         Console.WriteLine("Enter in the filename you would like to load? ");
