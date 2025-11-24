@@ -145,15 +145,7 @@ class Program
 
             foreach (Goal item in goals) // Get every scripture
             {
-                sw.WriteLine(item.getReference()); // Write the reference
-                foreach(Verse verse in item.getVerses()) // Get each verse in that scripture
-                {
-                    foreach (Word write in verse.getWord()) // Start writing each word to the file
-                    {
-                        sw.Write(write.getWord() + " ");
-                    }
-                    sw.Write("\n");
-                }
+                sw.WriteLine(item.Save()); // Write the reference
             }
 
             sw.Close();
@@ -167,10 +159,9 @@ class Program
             Console.WriteLine("Executing finally block.");
         }
     }
-    static void load(ref List<Goal> goals, string filename)
+    static void load(ref List<Goal> goals, string filename, ref int points)
     {
         String line;
-        List<string> buffer = new List<string>();
         // Variables
         
         if (!filename.Contains(".txt"))
@@ -183,69 +174,22 @@ class Program
             //Pass the file path and file name to the StreamReader constructor
             StreamReader sr = new StreamReader(filename);
             //Read the first line of text
-            line = "";
+            points = int.Parse(sr.ReadLine());
             //Continue to read until you reach end of file
+            line = "";
+
             while (line != null)
             {
                 //Read the next line
                 line = sr.ReadLine();
 
-                if(line.Contains(":"))
+                if(line.Contains(","))
                 {
-                    string[] intitial = line.Split(':'); // split at the ':' mark of the reference
-
-                    if (intitial[1].Contains('-'))// Are there muitiple verses?
-                    {
-                        string[] verse_length = intitial[1].Split('-'); // Get the length of the reference
-                        int length = int.Parse(verse_length[1]) - int.Parse(verse_length[0]);
-
-                        List<string> verses = new List<string>();
-                        for (int i = 0; i <= length; i++)
-                        {
-                            verses.Add(sr.ReadLine());
-                        }
-
-                        _scriptures.Add(new Scripture(intitial[0], intitial[1], verses));
-                    }
-                    else
-                    {
-                        _scriptures.Add(new Scripture(intitial[0], intitial[1], sr.ReadLine()));
-                    }
+                    string [] buffer = line.Split(",");
                 }
             }
             //close the file
             sr.Close();
-
-            // Process the buffer
-
-            
-            for(int i = 0; i < buffer.Count ;i++)
-            {
-                if (buffer[i].Contains(":"))
-                {
-                    string[] intitial = buffer[i].Split(':'); // split at the ':' mark of the reference
-                    if (intitial[1].Contains('-'))// Are there muitiple verses?
-                    {
-                        string[] verse_length = intitial[1].Split('-'); // Get the length of the reference
-                        int length = int.Parse(verse_length[1]) - int.Parse(verse_length[0]); 
-
-                        List<string> verses = new List<string>();
-                        for (int j = 0; j <= length; j++) // Loop untill all verses have been read
-                        {
-                            verses.Add(buffer[i + j]);
-                        }
-                        string reference =  verse_length[0] + "-" + verse_length[1];
-                        _scriptures.Add(new Scripture(intitial[0], reference, verses));
-                    }
-                    else
-                    {
-                        string reference = buffer[0];
-                        _scriptures.Add(new Scripture(intitial[0], reference, buffer));
-                    }
-                }
-            }
-
-            
         }
         catch (Exception e)
         {
@@ -256,6 +200,4 @@ class Program
             Console.WriteLine("Executing finally block.");
         }
     }
-    
-    
 }

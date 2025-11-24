@@ -33,4 +33,9 @@ public class Checklist : Goal
         }
         Console.WriteLine($"{_task}\n\t{_description}: [X]/[X]");
     }
+
+    public override string Save()
+    {
+        return _task + "," + "," + _description + "," + _points + "," + _completionBonus + "," + _completed + "," + _iterations + "," + _loops;
+    }
 }

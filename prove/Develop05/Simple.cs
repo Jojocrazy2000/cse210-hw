@@ -26,6 +26,6 @@ public class Simple : Goal
 
     public override string Save()
     {
-        return _task + "," + _description + "," + _points + "," + _completed;
+        return "s" + "," + _task + "," + _description + "," + _points + "," + _completed;
     }
 }

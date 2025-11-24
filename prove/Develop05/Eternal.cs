@@ -18,4 +18,9 @@ public class Eternal : Goal
     {
         Console.WriteLine($"{_task}\n\t{_description}: [00]");
     }
+
+    public override string Save()
+    {
+        return "e" + "," + _task + "," + _description + "," + _points + "," + _completed;
+    }
 }
