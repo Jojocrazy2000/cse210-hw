@@ -3,7 +3,7 @@ public class Simple : Goal
     // Variables
 
     // Constructors
-    public Simple(string task="Error", string description = "Null", int points = 0) : base(task, description, points)
+    public Simple(string task="Error", string description = "Null", int points = 0, bool complet = false) : base(task, description, points, complet)
     {
 
     }
@@ -11,17 +11,28 @@ public class Simple : Goal
     // Methods
     public override int CalculateScored()
     {
-        _completed = true;
-        return _points;
+        if(!_completed)
+        {
+            _completed = true;
+            return _points;
+        }
+        else
+        {
+            Console.WriteLine("Goal already completed");
+            return 0;
+        }
     }
 
     public override void DisplayGoal()
     {
         if (_completed)
         {
-            Console.WriteLine($"{_task}\n\t{_description}: [0]");
+            Console.WriteLine($"{_task}({_description}): [X]");
         }
-        Console.WriteLine($"{_task}\n\t{_description}: [x]");
+        else
+        {
+            Console.WriteLine($"{_task}({_description}): [ ]");
+        }
     }
 
     public override string Save()

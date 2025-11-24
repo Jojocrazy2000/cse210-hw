@@ -16,11 +16,11 @@ public class Eternal : Goal
 
     public override void DisplayGoal()
     {
-        Console.WriteLine($"{_task}\n\t{_description}: [00]");
+        Console.WriteLine($"{_task}({_description}): [ET]");
     }
 
     public override string Save()
     {
-        return "e" + "," + _task + "," + _description + "," + _points + "," + _completed;
+        return "e" + "," + _task + "," + _description + "," + _points + ",";
     }
 }

@@ -7,12 +7,12 @@ public abstract class Goal
     protected bool _completed; // Bool value which checks if the goal is done.
 
     // Constructors
-    public Goal(string task="Error", string description = "Null", int points = 0)
+    public Goal(string task="Error", string description = "Null", int points = 0, bool complet = false)
     {
         _task = task;
         _description = description;
         _points = points;
-        _completed = false;
+        _completed = complet;
     }
 
     // Methods

@@ -1,0 +1,4 @@
+0
+s,bob,bob,10,False
+cl,Thing,Comsume,69,10,1,False,1
+cl,What,Who,10,40,1,False,4

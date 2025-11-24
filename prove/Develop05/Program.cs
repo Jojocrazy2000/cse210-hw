@@ -7,10 +7,13 @@ class Program
         int select = 99;
         int points = 0;
         List<Goal> goals = new List<Goal>();
+        string filename;
 
-        while(select != 99)
+        while(select > 0 || select < 0)
         {
+            Console.Clear();
             Console.WriteLine("-----Welcome to Bob's Goal Emporium-----");
+            Console.WriteLine($"Points: {points}");
             Console.WriteLine("0)Exit\n1)Add Goal\n2)Log Event\n3)Display Goals\n4)Save\n5)Load");
             try
             {
@@ -24,6 +27,9 @@ class Program
             
             switch(select)
             {
+                case 0:
+                    Console.WriteLine("Have a Good day");
+                    break;
                 case 1: // Add Goal to goals
                     string task;
                     string description;
@@ -56,7 +62,7 @@ class Program
                         int bonus, loops;
                         try
                         {
-                            Console.WriteLine("How many time do you want to check this off?");
+                            Console.WriteLine("How many times do you want to check this off?");
                             loops = int.Parse(Console.ReadLine());
                             Console.WriteLine("How much should competing this task reward?");
                             bonus = int.Parse(Console.ReadLine());
@@ -78,6 +84,7 @@ class Program
                     {
                         goals.Add(new Simple(task, description, reward));
                     }
+                    Console.Clear();
                     break;
                 case 2: // Complete a Goal
                     int i = 1;
@@ -102,23 +109,36 @@ class Program
                         break;
                     }
 
-                    points += goals[choose].CalculateScored();
+                    int basic = goals[choose - 1].CalculateScored();
+                    points += basic;
+                    Console.WriteLine($"{basic} points were awarded");
+                    Console.WriteLine("Enter any Key to continue...");
+                    Console.ReadKey();
                     break;
                 case 3: // See all goals and their condition
+                    Console.Clear();
                     foreach (Goal check in goals)
                     {
                         check.DisplayGoal();
                     }
+                    Console.WriteLine("Enter any Key to continue...");
+                    Console.ReadKey();
                     break;
                 case 4: // Save
+                    Console.WriteLine("What is the filename of the file you wish to save to?");
+                    filename = Console.ReadLine();
+                    save(ref goals, filename, ref points);
                     break;
                 case 5: // Load
+                    Console.WriteLine("What is the filename of the file you wish to load?");
+                    filename = Console.ReadLine();
+                    load(ref goals, filename, ref points);
                     break;
                 case 99: // Developer mode
                     // Just here so that invalid inputs don't do the funny
                     break;
                 default: // Huh?
-                    Console.WriteLine("Admin right accessed");
+                    Console.WriteLine("Admin rights accessed");
                     break;
             }
         }
@@ -178,16 +198,52 @@ class Program
             //Continue to read until you reach end of file
             line = "";
 
+            line = sr.ReadLine();
+
             while (line != null)
             {
                 //Read the next line
-                line = sr.ReadLine();
-
-                if(line.Contains(","))
+                string [] buffer = line.Split(",");
+                if (buffer[0] == "s")
                 {
-                    string [] buffer = line.Split(",");
+                    bool completed;
+                    if(buffer[4] == "True")
+                    {
+                        completed = true;   
+                    }
+                    else
+                    {
+                        completed = false;
+                    }
+                    goals.Add(new Simple(buffer[1], buffer[2], int.Parse(buffer[3]), completed));
                 }
+                if (buffer[0] == "e")
+                {
+                    goals.Add(new Eternal(buffer[1], buffer[2], int.Parse(buffer[3])));
+                }
+                if (buffer[0] == "cl")
+                {
+                    bool completed;
+                    if(buffer[6] == "True")
+                    {
+                        completed = true;   
+                    }
+                    else
+                    {
+                        completed = false;
+                    }
+                    int amount = int.Parse(buffer[5]);
+                    goals.Add(new Checklist(buffer[1], buffer[2], int.Parse(buffer[3]), int.Parse(buffer[4]), int.Parse(buffer[7]), completed, amount));
+                }
+                line = sr.ReadLine();
             }
+
+            foreach (Goal check in goals)
+            {
+                check.DisplayGoal();
+            }
+            Console.WriteLine("Enter any Key to continue");
+            Console.ReadLine();
             //close the file
             sr.Close();
         }
