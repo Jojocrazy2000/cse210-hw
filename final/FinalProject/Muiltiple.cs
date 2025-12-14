@@ -1,8 +1,13 @@
 public class Muiltiple : ToDo
 {
     // Variables
+    private int iterations;
 
     // Constructors
+    public Muiltiple(string description, string day = null) : base(description, day)
+    {
+        
+    }
 
     // Methods
     public override void Display()
