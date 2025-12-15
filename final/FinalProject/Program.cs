@@ -9,12 +9,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello FinalProject World!");
         // local variables
         string choice = "";
         List<Plan> plans = new List<Plan>(); // This is just here so that any new classes added don't have to have another structure
-        List<Events> events = new List<Events>();
-        List<Classes> classes = new List<Classes>();
+        List<Event> events = new List<Event>();
+        List<Class> classes = new List<Class>();
         List<ToDo> toDos = new List<ToDo>();
         List<Meal> meals = new List<Meal>();
 
@@ -29,35 +28,99 @@ class Program
             if(choice == "1")
             {
                 // Display all plans
-                foreach(Plan item in classes)
+                Console.Clear();
+                Console.WriteLine("**Class list**");
+                foreach(Class item in classes)
                 {
                     item.Display();
                 }
-                foreach(Plan item in toDos)
+                
+                Console.WriteLine("**To-Do list**");
+                foreach(ToDo item in toDos)
                 {
                     item.Display();
                 }
-                foreach(Plan item in events)
+
+                Console.WriteLine("**Upcoming Events**");
+                foreach(Event item in events)
                 {
                     item.Display();
                 }
-                foreach(Plan item in meals)
+
+                Console.WriteLine("**Meal plans**");
+                foreach(Meal item in meals)
                 {
                     item.Display();
                 }
+
+                // Pause for input
+                Console.WriteLine("Enter any key to continue...");
+                Console.ReadKey();
             }
             else if(choice == "2")
             {
                 // Let the user see each catagory of plan and be able to choose one
-                   
+                Console.Clear();
+                Console.WriteLine("---- Student Life Plans ----");
+                Console.WriteLine("*Look at Plans");
+                Console.WriteLine("1)Classes\n2)To-Do items\n3)Upcoming Events\n4)Meal Plans");
+                int select;
+                try
+                {
+                    select = int.Parse(Console.ReadLine());
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("Invalide input");
+                    continue;
+                }
+
+                if(select == 1)
+                {
+                    Console.WriteLine("**Class list**");
+                    foreach(Class item in classes)
+                    {
+                        item.Display();
+                    }
+                }
+                else if(select == 2)
+                {
+                    Console.WriteLine("**To-Do list**");
+                    foreach(ToDo item in toDos)
+                    {
+                        item.Display();
+                    }
+                }
+                else if(select == 3)
+                {
+                    Console.WriteLine("**Upcoming Events**");
+                    foreach(Event item in events)
+                    {
+                        item.Display();
+                    }
+                }
+                else if(select == 4)
+                {
+                    Console.WriteLine("**Meal plans**");
+                    foreach(Meal item in meals)
+                    {
+                        item.Display();
+                    }
+                }
+
+                // Pause for input
+                Console.WriteLine("Enter any key to continue...");
+                Console.ReadKey();
+
+
             }
             else if(choice == "3")
             {
                 // Let the user choose from the list of plans and add to said list
                 Console.Clear();
                 Console.WriteLine("---- Student Life Plans ----");
-                Console.WriteLine("*Adding event*");
-                Console.WriteLine("1)Class List\n2)To-Do list\n3)Coming Events\n4)Meal Prep");
+                Console.WriteLine("*Add a Plan");
+                Console.WriteLine("1)Add a Class\n2)Add a To-Do item\n3)Add an Event\n4)Add a Meal");
                 int select;
                 try
                 {
@@ -81,7 +144,7 @@ class Program
                     string weekdays = Console.ReadLine();
 
                     // Create object
-                    classes.Add(new Classes(describe, weekdays));
+                    classes.Add(new Class(describe, weekdays));
                 }
                 else if(select == 2) // Todo list
                 {
@@ -90,7 +153,7 @@ class Program
                     string describe = Console.ReadLine();
 
                     // Give days of the week
-                    Console.WriteLine("What day of the week do you need this done by? (S, M, T, W, *R, F, S or None)");
+                    Console.WriteLine("What day of the week do you need this done by? (SN, M, T, W, *R, F, SA or None)");
                     Console.WriteLine("*R equals thursday");
                     string weekday = Console.ReadLine();
 
@@ -135,7 +198,7 @@ class Program
                     string weekdays = Console.ReadLine();
 
                     // Create object
-                    events.Add(new Events(describe, weekdays));
+                    events.Add(new Event(describe, weekdays));
                 }
                 else if(select == 4) // Meal prep
                 {
@@ -144,7 +207,7 @@ class Program
                     string describe = Console.ReadLine();
 
                     // Give days of the week
-                    Console.WriteLine("What day of the week is it? (SU,M,T,W,*R,F,SA)");
+                    Console.WriteLine("What day of the week is it? (SN,M,T,W,*R,F,SA)");
                     Console.WriteLine("*R equals thursday");
                     string weekdays = Console.ReadLine();
 
@@ -156,6 +219,7 @@ class Program
             else if(choice == "4")
             {
                 // Tentative capability. Will allow the user to save and load their plans as a profile.
+                Console.WriteLine("To be implementated later");
             }
             else if(choice == "0")
             {

@@ -9,9 +9,17 @@ public class Single : ToDo
     }
 
     // Methods
+    public void complet_step()
+    {
+        _completed = true;
+    }
     public override void Display()
     {
-        throw new NotImplementedException();
+        if (_completed)
+        {
+            Console.WriteLine($"{_title} : {_description}. Completed");
+        }
+        Console.WriteLine($"{_title} : {_description}. 0/1");
     }
 
     public override void Save()
