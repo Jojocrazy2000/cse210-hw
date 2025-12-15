@@ -1,4 +1,4 @@
-public class Classes : Plans
+public class Classes : Plan
 {
     // Variables
     private int _time;

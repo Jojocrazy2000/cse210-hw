@@ -1,4 +1,4 @@
-public abstract class ToDo : Plans
+public abstract class ToDo : Plan
 {
     // Variables
     private bool _completed;
